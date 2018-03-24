@@ -1,0 +1,24 @@
+{
+  "name": "craftdock/alpine-php7",
+  "default": "latest",
+  "versions": [
+    {
+      "version": "latest",
+      "dockerfile": "7.2/Dockerfile",
+      "context": "7.2/.",
+      "data":"7.2.3"
+    },
+    {
+        "version": "7.2",
+        "dockerfile": "7.2/Dockerfile",
+        "context": "7.2/.",
+        "data":"7.2.3"
+    },
+    {
+        "version": "7.1",
+        "dockerfile": "7.1/Dockerfile",
+        "context": "7.1/.",
+        "data":"7.1.15"
+    }
+  ]
+}
