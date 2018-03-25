@@ -9,6 +9,13 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{md,sh,ps1}]
+[*.md]
 max_line_length = 0
 trim_trailing_whitespace = false
+
+[*.json]
+indent_size = 2
+
+[Dockerfile]
+trim_trailing_whitespace = false
+insert_final_newline = false
