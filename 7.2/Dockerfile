@@ -18,6 +18,8 @@ ADD https://php.codecasts.rocks/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.
 RUN \
 	# Print executed commands
 	set -x \
+    # Add codecasts.rocks php repository
+    && echo "@php http://php.codecasts.rocks/v3.7/php-7.2" >> /etc/apk/repositories \
     # Update repository indexes
     && apk-update \
     # Add packages
@@ -31,38 +33,36 @@ RUN \
         # https://github.com/docker-library/php/issues/494
         libressl \
     # Add php packages
-    && apk-install --repository https://php.codecasts.rocks/v3.7/php-7.2 \
-        php7 php7-fpm \
+    && apk-install --update \
+        php7@php `# Contains: fileinfo, SimpleXML, tokenizer, xmlwriter` \
+        php7-fpm@php \
         # php libs
-        php7-apcu \
-        php7-bcmath \
-        php7-common \
-        php7-ctype \
-        php7-curl \
-        php7-dom \
-        php7-gd \
-        php7-iconv \
-        php7-json \
-        php7-mbstring\
-        php7-memcached \
-        php7-mysqli \
-        php7-opcache \
-        php7-openssl \
-        php7-pdo \
-        php7-pdo_mysql \
-        php7-pgsql \
-        php7-pdo_sqlite \
-        php7-phar \
-        php7-redis \
-        php7-session \
-        php7-simplexml \
-        php7-sqlite3 \
-        php7-tokenizer \
-        php7-xml \
-        php7-xmlreader \
-        php7-xmlwriter \
-        php7-zip \
-        php7-zlib \
+        php7-apcu@php \
+        php7-bcmath@php \
+        php7-common@php \
+        php7-ctype@php \
+        php7-curl@php \
+        php7-dom@php \
+        php7-gd@php \
+        php7-iconv@php \
+        php7-json@php \
+        php7-mbstring@php \
+        php7-memcached@php \
+        php7-mysqli@php \
+        php7-opcache@php \
+        php7-openssl@php \
+        php7-pdo@php \
+        php7-pdo_mysql@php \
+        php7-pgsql@php \
+        php7-pdo_sqlite@php \
+        php7-phar@php \
+        php7-redis@php \
+        php7-session@php \
+        php7-sqlite3@php \
+        php7-xml@php \
+        php7-xmlreader@php \
+        php7-zip@php \
+        php7-zlib@php \
     # symblink php7 to php
     && ln -sf /usr/bin/php7 /usr/bin/php \
     # symlink php-fpm7 to php-fpm
@@ -76,7 +76,7 @@ RUN \
 ENV PATH "/var/www/.composer/vendor/bin:$PATH"
 
 # Copy scripts
-COPY ./rootfs /
+COPY /rootfs /
 
 # Expose php-fpm port
 EXPOSE 9000
