@@ -3,23 +3,16 @@ FROM craftdock/alpine-runit:latest
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
       description="Minimal Alpine image with php7 and runit process supervisor."
 
+ENV PHP_VERSION=7.1
 
-RUN set -x \
-    # Ensure www-data user exists
-    # 82 is the standard uid/gid for "www-data" in Alpine
-    && addgroup -g 82 -S www-data && adduser -u 82 -S -D -G www-data www-data \
-    # Create default webroot folder
-    && mkdir -p /var/www \
-    && chown www-data:www-data /var/www
-
-# trust this project public key to trust the php packages.
-ADD https://php.codecasts.rocks/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
+# Trust this project public key to trust the php packages.
+ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN \
 	# Print executed commands
 	set -x \
-    # Add codecasts.rocks php repository
-    && echo "@php http://php.codecasts.rocks/v3.7/php-7.1" >> /etc/apk/repositories \
+    # Add php.earth php repository
+    && sed -i '1s,^,http://repos.php.earth/alpine/v3.7\n,' /etc/apk/repositories \
     # Update repository indexes
     && apk-update \
     # Add packages
@@ -32,48 +25,51 @@ RUN \
         zip \
         # https://github.com/docker-library/php/issues/494
         libressl \
-    # Add php packages
+    # Add php packages & composer
     && apk-install --update \
-        php7@php `# Contains: fileinfo, SimpleXML, tokenizer, xmlwriter` \
-        php7-fpm@php \
+        php7.1 \
+        php7.1-fpm \
         # php libs
-        php7-apcu@php \
-        php7-bcmath@php \
-        php7-common@php \
-        php7-ctype@php \
-        php7-curl@php \
-        php7-dom@php \
-        php7-gd@php \
-        php7-iconv@php \
-        php7-json@php \
-        php7-mbstring@php \
-        php7-memcached@php \
-        php7-mysqli@php \
-        php7-opcache@php \
-        php7-openssl@php \
-        php7-pdo@php \
-        php7-pdo_mysql@php \
-        php7-pgsql@php \
-        php7-pdo_sqlite@php \
-        php7-phar@php \
-        php7-redis@php \
-        php7-session@php \
-        php7-sqlite3@php \
-        php7-xml@php \
-        php7-xmlreader@php \
-        php7-zip@php \
-        php7-zlib@php \
+        php7.1-apcu \
+        php7.1-bcmath \
+        php7.1-common \
+        php7.1-ctype \
+        php7.1-curl \
+        php7.1-dom \
+        php7.1-fileinfo \
+        php7.1-gd \
+        php7.1-iconv \
+        php7.1-json \
+        php7.1-mbstring \
+        php7.1-memcached \
+        php7.1-mysqli \
+        php7.1-opcache \
+        php7.1-openssl \
+        php7.1-pdo \
+        php7.1-pdo_mysql \
+        php7.1-pgsql \
+        php7.1-pdo_sqlite \
+        php7.1-phar \
+        php7.1-redis \
+        php7.1-session \
+        php7.1-simplexml \
+        php7.1-sqlite3 \
+        php7.1-tokenizer \
+        php7.1-xml \
+        php7.1-xmlreader \
+        php7.1-xmlwriter \
+        php7.1-zip \
+        php7.1-zlib \
+        # Composer
+        composer \
+        php7.1-composer \
     # symblink php7 to php
-    && ln -sf /usr/bin/php7 /usr/bin/php \
-    # symlink php-fpm7 to php-fpm
-    && ln -sf /usr/sbin/php-fpm7 /usr/sbin/php-fpm \
-    # Add composer
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && ln -s "/etc/php/$PHP_VERSION/" /etc/php7 \
+    # Create default webroot folder
+    && mkdir -p /var/www \
+    && chown www-data:www-data /var/www \
 	# Clear apk's cache
 	&& apk-cleanup
-
-# Add composer vendor to the PATH
-ENV PATH "/var/www/.composer/vendor/bin:$PATH"
 
 # Copy scripts
 COPY /rootfs /

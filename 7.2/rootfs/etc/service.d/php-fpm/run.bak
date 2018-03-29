@@ -11,7 +11,7 @@ exec 2>&1
 [ -r /etc/envvars ] && . /etc/envvars
 
 # Let's go and start php-fpm
-exec php-fpm
+exec su-exec www-data php-fpm
 
 # This exit code will be sent as the first parameter to the finish script
 exit 1

@@ -36,10 +36,6 @@ export APCU_SHM_SIZE=${APCU_SHM_SIZE:='128M'}
 export APCU_TTL=${APCU_TTL:='7200'}
 
 
-# Create conf.d directory
-mkdir -p "/etc/php7/conf.d/"
-chown -R www-data:www-data "/etc/php7/conf.d/"
-
 # Use templater to generate config files
 templater /etc/entrypoint.d/php.ini.cnf/core.ini.tpl > /etc/php7/conf.d/core.ini
 templater /etc/entrypoint.d/php.ini.cnf/opcache.ini.tpl > /etc/php7/conf.d/opcache.ini
