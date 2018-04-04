@@ -1,3 +1,25 @@
+# Php repository.
+# (This is a workaround when behind a proxy to prevent 'Permission denied' from php.earth repo)
+FROM craftdock/alpine-base as php_repository
+
+RUN \
+	# Print executed commands
+	set -x \
+    # Update repository indexes
+    && apk-update \
+    # Add packages
+    && apk-install --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
+        wget \
+    # Create php repository folder
+    && mkdir -p /php.earth/x86_64/ \
+    && cd /php.earth/x86_64/ \
+    # Copy all packages from  php.earth repo to /php.earth/x86_64
+    && wget -r -nd -np -k http://repos.php.earth/alpine/v3.7/x86_64/ \
+	# Clear apk's cache
+	&& apk-cleanup
+
+
+# Php
 FROM craftdock/alpine-runit:latest
 
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
@@ -8,11 +30,12 @@ ENV PHP_VERSION=7.2
 # Trust this project public key to trust the php packages.
 ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
+# Copy all packages from
+COPY --from=php_repository /php.earth/x86_64 /tmp/php.earth/x86_64
+
 RUN \
 	# Print executed commands
 	set -x \
-    # Add php.earth php repository
-    && sed -i '1s,^,http://repos.php.earth/alpine/v3.7\n,' /etc/apk/repositories \
     # Update repository indexes
     && apk-update \
     # Add packages
@@ -23,10 +46,11 @@ RUN \
         openssh-client \
         tar \
         zip \
+        wget \
         # https://github.com/docker-library/php/issues/494
         libressl \
     # Add php packages & composer
-    && apk-install --update \
+    && apk-install --repository /tmp/php.earth \
         php7.2 \
         php7.2-fpm \
         # php libs
