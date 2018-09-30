@@ -29,7 +29,7 @@ RUN \
         # https://github.com/docker-library/php/issues/494
         libressl \
     # Add php packages & composer
-    && apk-install --repository https://repos.php.earth/alpine/v3.7 \
+    && apk-install --repository https://repos.php.earth/alpine/v3.8 \
         php7.2 \
         php7.2-fpm \
         # php libs

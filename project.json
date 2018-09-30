@@ -9,6 +9,12 @@
       "data":"7.2.7"
     },
     {
+        "version": "7.3",
+        "dockerfile": "7.3/Dockerfile",
+        "context": "7.3/.",
+        "data":"7.3.0"
+    },
+    {
         "version": "7.2",
         "dockerfile": "7.2/Dockerfile",
         "context": "7.2/.",

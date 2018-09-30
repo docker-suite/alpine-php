@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# set -e : Exit the script if any statement returns a non-true return value.
+# set -o pipefail : Check the exit code of pipeline's last command.
+# set -u : Exit the script when using uninitialised variable.
+set -euo pipefail
+
+# Reset PATH to avoid messed up duplication
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+## Define default variables to be used in the config file
+export CORE_REALPATH_CACHE_SIZE=${REALPATH_CACHE_SIZE:='256K'}
+export CORE_REALPATH_CACHE_TTL=${REALPATH_CACHE_TTL:='600'}
+export CORE_MEMORY_LIMIT=${CORE_MEMORY_LIMIT:='128M'}
+export CORE_UPLOAD_MAX_FILESIZE=${CORE_UPLOAD_MAX_FILESIZE:='1G'}
+export CORE_POST_MAX_SIZE=${CORE_POST_MAX_SIZE:='1G'}
+export TIMEZONE=${TIMEZONE:='UTC'}
+
+export OPCACHE_ENABLE=${OPCACHE_ENABLE:='1'}
+export OPCACHE_ENABLE_CLI=${OPCACHE_ENABLE_CLI:='0'}
+export OPCACHE_ENABLE_MEMORY_CONSUMPTION=${OPCACHE_ENABLE_MEMORY_CONSUMPTION:='128'}
+export OPCACHE_INTERNED_STRINGS_BUFFER=${OPCACHE_INTERNED_STRINGS_BUFFER:='8'}
+export OPCACHE_MAX_ACCELERATED_FILES=${OPCACHE_MAX_ACCELERATED_FILES:='20000'}
+export OPCACHE_MAX_WESTED_PERCENTAGE=${OPCACHE_MAX_WESTED_PERCENTAGE:='5'}
+export OPCACHE_USE_CWD=${OPCACHE_USE_CWD:='1'}
+export OPCACHE_VALIDATE_TIMESTAMPS=${OPCACHE_VALIDATE_TIMESTAMPS:='1'}
+export OPCACHE_REVALIDATE_FREQ=${OPCACHE_REVALIDATE_FREQ:='60'}
+export OPCACHE_FILE_UPDATE_PROTECTION=${OPCACHE_FILE_UPDATE_PROTECTION:='2'}
+export OPCACHE_REVALIDATE_PATH=${OPCACHE_REVALIDATE_PATH:='0'}
+export OPCACHE_SAVE_COMMENTS=${OPCACHE_SAVE_COMMENTS:='1'}
+export OPCACHE_LOAD_COMMENTS=${OPCACHE_LOAD_COMMENTS:='1'}
+export OPCACHE_FAST_SHUTDOWN=${OPCACHE_FAST_SHUTDOWN:='1'}
+
+export APCU_ENABLE=${APCU_ENABLE:='1'}
+export APCU_SHM_SIZE=${APCU_SHM_SIZE:='128M'}
+export APCU_TTL=${APCU_TTL:='7200'}
+
+
+# Use templater to generate config files
+templater /etc/entrypoint.d/php.ini.cnf/core.ini.tpl > /etc/php7/conf.d/core.ini
+templater /etc/entrypoint.d/php.ini.cnf/opcache.ini.tpl > /etc/php7/conf.d/opcache.ini
+templater /etc/entrypoint.d/php.ini.cnf/apcu.ini.tpl > /etc/php7/conf.d/apcu.ini
