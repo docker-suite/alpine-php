@@ -24,7 +24,7 @@
         "version": "7.1",
         "dockerfile": "7.1/Dockerfile",
         "context": "7.1/.",
-        "data":"7.1.18"
+        "data":"7.1.25"
     }
   ]
 }
