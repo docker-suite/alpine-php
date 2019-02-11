@@ -1,5 +1,5 @@
 # Php
-FROM craftdock/alpine-runit:latest
+FROM craftdock/alpine-runit:3.8
 
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
       description="Minimal Alpine image with php7 and runit process supervisor."
