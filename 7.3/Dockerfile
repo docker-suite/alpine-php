@@ -1,5 +1,5 @@
 # Php
-FROM craftdock/alpine-runit:latest
+FROM craftdock/alpine-runit:3.8
 
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
       description="Minimal Alpine image with php7 and runit process supervisor."
@@ -32,45 +32,45 @@ RUN \
     && apk-install --repository http://repos.php.earth/alpine/v3.8 \
         php7.3 \
         php7.3-fpm \
-        # # php libs
-        # php7.3-apcu \
-        # php7.3-bcmath \
-        # php7.3-common \
-        # php7.3-ctype \
-        # php7.3-curl \
-        # php7.3-dom \
-        # php7.3-fileinfo \
-        # php7.3-gd \
-        # php7.3-iconv \
-        # php7.3-json \
-        # php7.3-mbstring \
-        # php7.3-memcached \
-        # php7.3-mysqli \
-        # php7.3-opcache \
-        # php7.3-openssl \
-        # php7.3-pdo \
-        # php7.3-pdo_mysql \
-        # php7.3-pgsql \
-        # php7.3-pdo_sqlite \
-        # php7.3-phar \
-        # php7.3-redis \
-        # php7.3-session \
-        # php7.3-simplexml \
-        # php7.3-sqlite3 \
-        # php7.3-tokenizer \
-        # php7.3-xml \
-        # php7.3-xmlreader \
-        # php7.3-xmlwriter \
-        # php7.3-zip \
-        # php7.3-zlib \
-        # # Composer
-        # composer \
-        # php7.3-composer \
-    # # symblink php7 to php
-    # && ln -s "/etc/php/$PHP_VERSION/" /etc/php7 \
-    # # Create default webroot folder
-    # && mkdir -p /var/www \
-    # && chown www-data:www-data /var/www \
+        # php libs
+        php7.3-apcu \
+        php7.3-bcmath \
+        php7.3-common \
+        php7.3-ctype \
+        php7.3-curl \
+        php7.3-dom \
+        php7.3-fileinfo \
+        php7.3-gd \
+        php7.3-iconv \
+        php7.3-json \
+        php7.3-mbstring \
+        php7.3-memcached \
+        php7.3-mysqli \
+        php7.3-opcache \
+        php7.3-openssl \
+        php7.3-pdo \
+        php7.3-pdo_mysql \
+        php7.3-pgsql \
+        php7.3-pdo_sqlite \
+        php7.3-phar \
+        php7.3-redis \
+        php7.3-session \
+        php7.3-simplexml \
+        php7.3-sqlite3 \
+        php7.3-tokenizer \
+        php7.3-xml \
+        php7.3-xmlreader \
+        php7.3-xmlwriter \
+        php7.3-zip \
+        php7.3-zlib \
+        # Composer
+        composer \
+        php7.3-composer \
+    # symblink php7 to php
+    && ln -s "/etc/php/$PHP_VERSION/" /etc/php7 \
+    # Create default webroot folder
+    && mkdir -p /var/www \
+    && chown www-data:www-data /var/www \
 	# Clear apk's cache
 	&& apk-cleanup
 
