@@ -19,11 +19,16 @@ PHP_FPM_PM_MIN_SPARE_SERVERS        | `1`
 PHP_FPM_PM_MAX_SPARE_SERVERS        | `3`
 PHP_FPM_PM_CLEAR_ENV                | `no`
 PHP_FPM_PM_CATCH_WORKERS_OUTPUT     | `yes`
-CORE_REALPATH_CACHE_SIZE            | `256K`
-CORE_REALPATH_CACHE_TTL             | `600`
+CORE_REALPATH_CACHE_SIZE            | `4M`
+CORE_REALPATH_CACHE_TTL             | `120`
 CORE_MEMORY_LIMIT                   | `128M`
+CORE_FILE_UPLOADS                   | `1`
+CORE_UPLOAD_TMP_DIR                 | 
 CORE_UPLOAD_MAX_FILESIZE            | `1G`
 CORE_POST_MAX_SIZE                  | `1G`
+CORE_OUTPUT_BUFFERING               | `0`
+CORE_MAX_INPUT_TIME                 | `-1`
+CORE_MAX_EXECUTION_TIME             | `30`
 TIMEZONE                            | `UTC`
 OPCACHE_ENABLE                      | `1`
 OPCACHE_ENABLE_CLI                  | `0`
