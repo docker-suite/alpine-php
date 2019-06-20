@@ -99,6 +99,7 @@ RUN \
     ln -s "/etc/php/$PHP_VERSION/" "/etc/php7" \
     && rm -f "/etc/php7/php-fpm.conf" \
     && ln -s "/etc/php/php-fpm.conf" "/etc/php7/php-fpm.conf" \
+    && ln -s "/usr/bin/php$PHP_VERSION" "/usr/bin/php7" \
     # Create default webroot folder
     && mkdir -p /var/www \
     && chown www-data:www-data /var/www
