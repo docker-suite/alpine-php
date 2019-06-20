@@ -1,0 +1,108 @@
+FROM dsuite/alpine-runit:3.9
+
+LABEL maintainer="Hexosse <hexosse@gmail.com>" \
+      description="Minimal Alpine image with php7 and runit process supervisor." \
+      vendor="docker-suite" \
+      license="MIT"
+
+
+## Current php version
+ENV PHP_VERSION=7.4
+
+
+## When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+
+## php packages
+COPY --from=dsuite/php-repo:all /repo /tmp/repo
+COPY --from=dsuite/php-repo:all /etc/apk/keys /etc/apk/keys
+
+
+## Add Trust key for php packages.
+ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
+
+
+## Install
+RUN \
+	# Print executed commands
+	set -x \
+    # Update repository indexes
+    && apk-update \
+    # Add packages
+    && apk-install --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
+        ca-certificates \
+        libcap \
+        memcached \
+        openssh-client \
+        tar \
+        zip \
+        wget \
+        # https://github.com/docker-library/php/issues/494
+        libressl
+
+
+## Install php
+RUN \
+	# Print executed commands
+	set -x \
+    # Update repository indexes
+    && apk-update \
+    # Add packages
+    && apk-install --repository /tmp/repo/3.9/php \
+        php7.4 \
+        php7.4-fpm \
+        # php libs
+        php7.4-apcu \
+        php7.4-bcmath \
+        php7.4-common \
+        php7.4-ctype \
+        php7.4-curl \
+        php7.4-dom \
+        php7.4-fileinfo \
+        php7.4-gd \
+        php7.4-iconv \
+        php7.4-json \
+        php7.4-mbstring \
+        php7.4-memcached \
+        php7.4-mysqli \
+        php7.4-opcache \
+        php7.4-openssl \
+        php7.4-pdo \
+        php7.4-pdo_mysql \
+        php7.4-pgsql \
+        php7.4-pdo_sqlite \
+        php7.4-phar \
+        php7.4-redis \
+        php7.4-session \
+        php7.4-simplexml \
+        php7.4-sqlite3 \
+        php7.4-tokenizer \
+        php7.4-xml \
+        php7.4-xmlreader \
+        php7.4-xmlwriter \
+        php7.4-zip \
+        php7.4-zlib \
+        # Composer
+        composer \
+        php7.4-composer \
+	# Clear apk's cache
+	&& apk-cleanup
+
+
+## Copy scripts
+ADD /rootfs /
+
+
+## Config
+RUN \
+    ln -s "/etc/php/$PHP_VERSION/" "/etc/php7" \
+    && rm -f "/etc/php7/php-fpm.conf" \
+    && ln -s "/etc/php/php-fpm.conf" "/etc/php7/php-fpm.conf" \
+    # Create default webroot folder
+    && mkdir -p /var/www \
+    && chown www-data:www-data /var/www
+
+
+## Expose php-fpm port
+EXPOSE 9000

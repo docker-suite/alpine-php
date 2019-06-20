@@ -1,12 +1,18 @@
-# alpine-php7
+# ![](https://github.com/docker-suite/artwork/raw/master/logo/png/logo_32.png) alpine-php7
+[![Build Status](http://jenkins.hexocube.fr/job/docker-suite/job/alpine-php7/badge/icon?color=green&style=flat-square)](http://jenkins.hexocube.fr/job/docker-suite/job/alpine-php7/)
+![Docker Pulls](https://img.shields.io/docker/pulls/dsuite/alpine-php7.svg?style=flat-square)
+![Docker Stars](https://img.shields.io/docker/stars/dsuite/alpine-php7.svg?style=flat-square)
+![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/dsuite/alpine-php7/latest.svg?style=flat-square)
+![MicroBadger Size (tag)](https://img.shields.io/microbadger/image-size/dsuite/alpine-php7/latest.svg?style=flat-square)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-This is a docker image for php7 running on [Alpine container][alpine-runit] with [runit][runit] process supervisor.
+A php7 docker image built on top of the latest [Alpine runit][alpine-runit] container with [runit][runit] process supervisor.
 
 
-## Ports
+## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Ports
 - 9000
 
-## Available environment variables
+## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Available environment variables
 
 Name                                | Default value
 ------------------------------------|-------------------------------------------------
@@ -23,7 +29,7 @@ CORE_REALPATH_CACHE_SIZE            | `4M`
 CORE_REALPATH_CACHE_TTL             | `120`
 CORE_MEMORY_LIMIT                   | `128M`
 CORE_FILE_UPLOADS                   | `1`
-CORE_UPLOAD_TMP_DIR                 | 
+CORE_UPLOAD_TMP_DIR                 | NULL
 CORE_UPLOAD_MAX_FILESIZE            | `1G`
 CORE_POST_MAX_SIZE                  | `1G`
 CORE_OUTPUT_BUFFERING               | `0`
@@ -47,8 +53,6 @@ OPCACHE_FAST_SHUTDOWN               | `1`
 APCU_ENABLE                         | `1`
 APCU_SHM_SIZE                       | `128M`
 APCU_TTL                            | `7200`
-
-
 
 
 [alpine-runit]: https://hub.docker.com/r/craftdock/alpine-runit/
