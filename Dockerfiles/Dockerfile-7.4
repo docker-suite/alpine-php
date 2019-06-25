@@ -15,8 +15,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 
 ## php packages
-COPY --from=dsuite/php-repo:all /repo /tmp/repo
-COPY --from=dsuite/php-repo:all /etc/apk/keys /etc/apk/keys
+COPY --from=dsuite/repo-php:all /repo /tmp/repo
+COPY --from=dsuite/repo-php:all /etc/apk/keys /etc/apk/keys
 
 
 ## Add Trust key for php packages.
@@ -49,7 +49,7 @@ RUN \
     # Update repository indexes
     && apk-update \
     # Add packages
-    && apk-install --repository /tmp/repo/3.9/php \
+    && apk-install --repository /tmp/repo/php/v3.9 \
         php7.4 \
         php7.4-fpm \
         # php libs
