@@ -94,9 +94,20 @@ RUN \
 ADD /rootfs /
 
 
+## entrypoint scripts must be executable
+RUN \
+	# Print executed commands
+	set -x \
+    # set scripts has executable
+    && chmod +x /etc/entrypoint.d/*.sh
+
+
 ## Config
 RUN \
-    ln -s "/etc/php/$PHP_VERSION/" "/etc/php7" \
+	# Print executed commands
+	set -x \
+    # php config
+    && ln -s "/etc/php/$PHP_VERSION/" "/etc/php7" \
     && rm -f "/etc/php7/php-fpm.conf" \
     && ln -s "/etc/php/php-fpm.conf" "/etc/php7/php-fpm.conf" \
     && ln -s "/usr/bin/php$PHP_VERSION" "/usr/bin/php7" \
