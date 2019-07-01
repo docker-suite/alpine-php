@@ -12,8 +12,6 @@ build-7.1:
 	docker build \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
-		--build-arg HTTP_PROXY=${http_proxy} \
-		--build-arg HTTPS_PROXY=${https_proxy} \
 		--file $(DIR)/Dockerfiles/Dockerfile-7.1 \
 		--tag $(DOCKER_IMAGE):7.1 \
 		$(DIR)/Dockerfiles
