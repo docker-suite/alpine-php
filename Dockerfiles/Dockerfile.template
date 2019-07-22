@@ -7,7 +7,7 @@ LABEL maintainer="Hexosse <hexosse@gmail.com>" \
 
 
 ## Current php version
-ENV PHP_VERSION=7.3
+ENV PHP_VERSION={{PHP_VERSION}}
 
 
 ## When using Composer, disable the warning about running commands as root/super user
@@ -50,42 +50,42 @@ RUN \
     && apk-update \
     # Add packages
     && apk-install --repository /tmp/repo/php/v3.9 \
-        php7.3 \
-        php7.3-fpm \
+        php{{PHP_VERSION}} \
+        php{{PHP_VERSION}}-fpm \
         # php libs
-        php7.3-apcu \
-        php7.3-bcmath \
-        php7.3-common \
-        php7.3-ctype \
-        php7.3-curl \
-        php7.3-dom \
-        php7.3-fileinfo \
-        php7.3-gd \
-        php7.3-iconv \
-        php7.3-json \
-        php7.3-mbstring \
-        php7.3-memcached \
-        php7.3-mysqli \
-        php7.3-opcache \
-        php7.3-openssl \
-        php7.3-pdo \
-        php7.3-pdo_mysql \
-        php7.3-pgsql \
-        php7.3-pdo_sqlite \
-        php7.3-phar \
-        php7.3-redis \
-        php7.3-session \
-        php7.3-simplexml \
-        php7.3-sqlite3 \
-        php7.3-tokenizer \
-        php7.3-xml \
-        php7.3-xmlreader \
-        php7.3-xmlwriter \
-        php7.3-zip \
-        php7.3-zlib \
+        php{{PHP_VERSION}}-apcu \
+        php{{PHP_VERSION}}-bcmath \
+        php{{PHP_VERSION}}-common \
+        php{{PHP_VERSION}}-ctype \
+        php{{PHP_VERSION}}-curl \
+        php{{PHP_VERSION}}-dom \
+        php{{PHP_VERSION}}-fileinfo \
+        php{{PHP_VERSION}}-gd \
+        php{{PHP_VERSION}}-iconv \
+        php{{PHP_VERSION}}-json \
+        php{{PHP_VERSION}}-mbstring \
+        php{{PHP_VERSION}}-memcached \
+        php{{PHP_VERSION}}-mysqli \
+        php{{PHP_VERSION}}-opcache \
+        php{{PHP_VERSION}}-openssl \
+        php{{PHP_VERSION}}-pdo \
+        php{{PHP_VERSION}}-pdo_mysql \
+        php{{PHP_VERSION}}-pgsql \
+        php{{PHP_VERSION}}-pdo_sqlite \
+        php{{PHP_VERSION}}-phar \
+        php{{PHP_VERSION}}-redis \
+        php{{PHP_VERSION}}-session \
+        php{{PHP_VERSION}}-simplexml \
+        php{{PHP_VERSION}}-sqlite3 \
+        php{{PHP_VERSION}}-tokenizer \
+        php{{PHP_VERSION}}-xml \
+        php{{PHP_VERSION}}-xmlreader \
+        php{{PHP_VERSION}}-xmlwriter \
+        php{{PHP_VERSION}}-zip \
+        php{{PHP_VERSION}}-zlib \
         # Composer
         composer \
-        php7.3-composer \
+        php{{PHP_VERSION}}-composer \
 	# Clear apk's cache
 	&& apk-cleanup
 
@@ -107,10 +107,10 @@ RUN \
 	# Print executed commands
 	set -x \
     # php config
-    && ln -s "/etc/php/$PHP_VERSION/" "/etc/php7" \
+    && ln -s "/etc/php/{{PHP_VERSION}}/" "/etc/php7" \
     && rm -f "/etc/php7/php-fpm.conf" \
     && ln -s "/etc/php/php-fpm.conf" "/etc/php7/php-fpm.conf" \
-    && ln -s "/usr/bin/php$PHP_VERSION" "/usr/bin/php7" \
+    && ln -s "/usr/bin/php{{PHP_VERSION}}" "/usr/bin/php7" \
     # Create default webroot folder
     && mkdir -p /var/www \
     && chown www-data:www-data /var/www

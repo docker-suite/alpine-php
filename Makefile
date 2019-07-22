@@ -9,6 +9,13 @@ test: test-7.1 test-7.2 test-7.3 test-7.4
 push: push-7.1 push-7.2 push-7.3 push-7.4
 
 build-7.1:
+	@docker run --rm \
+		-e http_proxy=${http_proxy} \
+		-e https_proxy=${https_proxy} \
+		-e PHP_VERSION=7.1 \
+		-v $(DIR)/Dockerfiles:/data \
+		dsuite/alpine-data \
+		sh -c "templater Dockerfile.template > Dockerfile-7.1"
 	docker build \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
@@ -17,6 +24,13 @@ build-7.1:
 		$(DIR)/Dockerfiles
 
 build-7.2:
+	@docker run --rm \
+		-e http_proxy=${http_proxy} \
+		-e https_proxy=${https_proxy} \
+		-e PHP_VERSION=7.2 \
+		-v $(DIR)/Dockerfiles:/data \
+		dsuite/alpine-data \
+		sh -c "templater Dockerfile.template > Dockerfile-7.2"
 	@docker build \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
@@ -25,6 +39,13 @@ build-7.2:
 		$(DIR)/Dockerfiles
 
 build-7.3:
+	@docker run --rm \
+		-e http_proxy=${http_proxy} \
+		-e https_proxy=${https_proxy} \
+		-e PHP_VERSION=7.3 \
+		-v $(DIR)/Dockerfiles:/data \
+		dsuite/alpine-data \
+		sh -c "templater Dockerfile.template > Dockerfile-7.3"
 	@docker build \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
@@ -33,6 +54,13 @@ build-7.3:
 		$(DIR)/Dockerfiles
 
 build-7.4:
+	@docker run --rm \
+		-e http_proxy=${http_proxy} \
+		-e https_proxy=${https_proxy} \
+		-e PHP_VERSION=7.4 \
+		-v $(DIR)/Dockerfiles:/data \
+		dsuite/alpine-data \
+		sh -c "templater Dockerfile.template > Dockerfile-7.4"
 	@docker build \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \

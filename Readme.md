@@ -55,5 +55,5 @@ APCU_SHM_SIZE                       | `128M`
 APCU_TTL                            | `7200`
 
 
-[alpine-runit]: https://hub.docker.com/r/craftdock/alpine-runit/
+[alpine-runit]: https://github.com/docker-suite/alpine-runit/
 [runit]: http://smarden.org/runit/
