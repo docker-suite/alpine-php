@@ -106,11 +106,12 @@ RUN \
 RUN \
 	# Print executed commands
 	set -x \
+    # remove default conf
+    && rm -f "/etc/php/{{PHP_VERSION}}/php-fpm.conf" \
     # php config
-    && ln -s "/etc/php/{{PHP_VERSION}}/" "/etc/php7" \
-    && rm -f "/etc/php7/php-fpm.conf" \
-    && ln -s "/etc/php/php-fpm.conf" "/etc/php7/php-fpm.conf" \
-    && ln -s "/usr/bin/php{{PHP_VERSION}}" "/usr/bin/php7" \
+    && ln -s "/etc/php/{{PHP_VERSION}}/"    "/etc/php7" \
+    && ln -s "/etc/php/php-fpm.conf"        "/etc/php7/php-fpm.conf" \
+    && ln -s "/usr/bin/php{{PHP_VERSION}}"  "/usr/bin/php7" \
     # Create default webroot folder
     && mkdir -p /var/www \
     && chown www-data:www-data /var/www
