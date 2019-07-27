@@ -1,4 +1,4 @@
-FROM dsuite/alpine-runit:3.9
+FROM dsuite/alpine-runit:3.10
 
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
       description="Minimal Alpine image with php7 and runit process supervisor." \
