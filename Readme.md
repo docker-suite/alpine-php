@@ -29,7 +29,7 @@ CORE_REALPATH_CACHE_SIZE            | `4M`
 CORE_REALPATH_CACHE_TTL             | `120`
 CORE_MEMORY_LIMIT                   | `128M`
 CORE_FILE_UPLOADS                   | `1`
-CORE_UPLOAD_TMP_DIR                 | NULL
+CORE_UPLOAD_TMP_DIR                 | /tmp/php/upload
 CORE_UPLOAD_MAX_FILESIZE            | `1G`
 CORE_POST_MAX_SIZE                  | `1G`
 CORE_OUTPUT_BUFFERING               | `0`
