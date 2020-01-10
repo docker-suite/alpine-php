@@ -1,0 +1,128 @@
+FROM dsuite/alpine-runit:{{ALPINE_VERSION}}
+
+LABEL maintainer="Hexosse <hexosse@gmail.com>" \
+      description="Minimal Alpine image with php {{ALPINE_VERSION}} and runit process supervisor." \
+      vendor="docker-suite" \
+      license="MIT"
+
+
+## Current php version
+ENV PHP_VERSION={{PHP_VERSION}}
+ENV PHP_INI_DIR /etc/php/{{PHP_VERSION}}
+
+
+## When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+
+## Install persistent / runtime deps
+RUN \
+	# Print executed commands
+	set -x \
+    # Update repository indexes
+    && apk-update \
+    # Add packages
+    && apk-install --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
+        binutils \
+        ca-certificates \
+        libcap \
+        memcached \
+        openssh-client \
+        tar \
+        unixodbc \
+        zip \
+        wget \
+        # https://github.com/docker-library/php/issues/494
+        openssl \
+	# Clear apk's cache
+	&& apk-cleanup
+
+## Install php and extensions
+RUN \
+	# Print executed commands
+	set -x \
+    # Add docker-suite repository key
+    && curl -o /etc/apk/keys/docker-suite.rsa.pub http://repo.hexocube.fr/alpine/docker-suite.rsa.pub \
+    # Add docker-suite repository
+    && echo "http://repo.hexocube.fr/alpine/v{{ALPINE_VERSION}}" >> /etc/apk/repositories \
+    # Add scripts from https://github.com/docker-library/php
+    && curl -o /usr/local/bin/docker-php-ext-configure https://raw.githubusercontent.com/docker-library/php/master/docker-php-ext-configure \
+    && curl -o /usr/local/bin/docker-php-ext-enable https://raw.githubusercontent.com/docker-library/php/master/docker-php-ext-enable \
+    && curl -o /usr/local/bin/docker-php-ext-install https://raw.githubusercontent.com/docker-library/php/master/docker-php-ext-install \
+    && chmod +x /usr/local/bin/docker-php-ext-* \
+    # Update repository indexes
+    && apk-update \
+    # Add packages
+    && apk-install \
+        php{{PHP_VERSION}} \
+        # php libs
+        php{{PHP_VERSION}}-bcmath \
+        php{{PHP_VERSION}}-bz2 \
+        php{{PHP_VERSION}}-calendar \
+        php{{PHP_VERSION}}-common \
+        php{{PHP_VERSION}}-ctype \
+        php{{PHP_VERSION}}-curl \
+        php{{PHP_VERSION}}-dom \
+        php{{PHP_VERSION}}-enchant \
+        php{{PHP_VERSION}}-exif \
+        php{{PHP_VERSION}}-fileinfo \
+        php{{PHP_VERSION}}-ftp \
+        php{{PHP_VERSION}}-gd \
+        php{{PHP_VERSION}}-gettext \
+        php{{PHP_VERSION}}-iconv \
+        php{{PHP_VERSION}}-imap \
+        php{{PHP_VERSION}}-intl \
+        php{{PHP_VERSION}}-json \
+        php{{PHP_VERSION}}-ldap \
+        php{{PHP_VERSION}}-mbstring \
+        php{{PHP_VERSION}}-mysqli \
+        php{{PHP_VERSION}}-mysqlnd \
+        php{{PHP_VERSION}}-odbc \
+        php{{PHP_VERSION}}-opcache \
+        php{{PHP_VERSION}}-openssl \
+        php{{PHP_VERSION}}-pcntl \
+        php{{PHP_VERSION}}-pdo \
+        php{{PHP_VERSION}}-pdo_dblib \
+        php{{PHP_VERSION}}-pdo_mysql \
+        php{{PHP_VERSION}}-pdo_odbc \
+        php{{PHP_VERSION}}-pdo_pgsql \
+        php{{PHP_VERSION}}-pdo_sqlite \
+        php{{PHP_VERSION}}-pear \
+        php{{PHP_VERSION}}-pgsql \
+        php{{PHP_VERSION}}-phar \
+        php{{PHP_VERSION}}-posix \
+        php{{PHP_VERSION}}-pspell \
+        php{{PHP_VERSION}}-session \
+        php{{PHP_VERSION}}-simplexml \
+        php{{PHP_VERSION}}-snmp \
+        php{{PHP_VERSION}}-soap \
+        php{{PHP_VERSION}}-sockets \
+        php{{PHP_VERSION}}-sodium \
+        php{{PHP_VERSION}}-sqlite3 \
+        php{{PHP_VERSION}}-tidy \
+        php{{PHP_VERSION}}-tokenizer \
+        php{{PHP_VERSION}}-xml \
+        php{{PHP_VERSION}}-xmlreader \
+        php{{PHP_VERSION}}-xmlwriter \
+        php{{PHP_VERSION}}-zip \
+        php{{PHP_VERSION}}-zlib \
+        # php extra libs
+        php{{PHP_VERSION}}-apcu \
+        php{{PHP_VERSION}}-composer \
+        php{{PHP_VERSION}}-imagick \
+        php{{PHP_VERSION}}-memcached \
+        php{{PHP_VERSION}}-meminfo \
+        php{{PHP_VERSION}}-pdo_sqlsrv \
+        php{{PHP_VERSION}}-redis \
+        php{{PHP_VERSION}}-sqlsrv \
+        php{{PHP_VERSION}}-uuid \
+        php{{PHP_VERSION}}-xlswriter \
+        php{{PHP_VERSION}}-yaml \
+    # Check php version
+    && [ $(php -v | head -n 1 | cut -d " " -f 2 | cut -f1-2 -d".") = "{{PHP_VERSION}}" ] \
+	# Clear apk's cache
+	&& apk-cleanup
+
+
+# Copy scripts
+ADD /rootfs.base /

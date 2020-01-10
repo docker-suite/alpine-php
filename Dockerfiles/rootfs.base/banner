@@ -10,8 +10,8 @@
              |_|         |_|
 
 
-  Welcome to dsuite/alpine-php7 :
-      for more info type : runit help
+       Welcome to dsuite/alpine-php :
+       for more info type : runit help
 
-  or visit : https://github.com/docker-suite/alpine-php7
+or visit : https://github.com/docker-suite/alpine-php
 

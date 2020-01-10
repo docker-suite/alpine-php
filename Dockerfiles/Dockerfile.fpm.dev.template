@@ -1,0 +1,17 @@
+FROM dsuite/alpine-php:{{PHP_VERSION}}-fpm
+
+
+## Install php and extensions
+RUN \
+	# Print executed commands
+	set -x \
+    # Update repository indexes
+    && apk-update \
+    # Add packages
+    && apk-install \
+        php{{PHP_VERSION}}-phpunit \
+        php{{PHP_VERSION}}-xdebug \
+    # Check php version
+    && [ $(php -v | head -n 1 | cut -d " " -f 2 | cut -f1-2 -d".") = "{{PHP_VERSION}}" ] \
+	# Clear apk's cache
+	&& apk-cleanup

@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
 
 # set -e : Exit the script if any statement returns a non-true return value.
-# set -o pipefail : Check the exit code of pipeline's last command.
 # set -u : Exit the script when using uninitialised variable.
-set -euo pipefail
+set -eu
 
-# Reset PATH to avoid messed up duplication
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-## Define default variables to be used in the config file
+# Define default variables to be used in core.ini
 export CORE_REALPATH_CACHE_SIZE=${REALPATH_CACHE_SIZE:='4M'}
 export CORE_REALPATH_CACHE_TTL=${REALPATH_CACHE_TTL:='120'}
 export CORE_MEMORY_LIMIT=${CORE_MEMORY_LIMIT:='128M'}
@@ -19,9 +15,14 @@ export CORE_POST_MAX_SIZE=${CORE_POST_MAX_SIZE:='1G'}
 export CORE_OUTPUT_BUFFERING=${CORE_OUTPUT_BUFFERING:='off'}
 export CORE_MAX_INPUT_TIME=${CORE_MAX_INPUT_TIME:='-1'}
 export CORE_MAX_EXECUTION_TIME=${CORE_MAX_EXECUTION_TIME:='30'}
-
 export TIMEZONE=${TIMEZONE:='UTC'}
 
+# core.ini
+DEBUG "Generating ${PHP_INI_DIR}/conf.d/core.ini"
+(export > /tmp/env && set -a && source /tmp/env && templater /etc/entrypoint.d/template/ini/core.ini.tpl > ${PHP_INI_DIR}/conf.d/core.ini)
+
+
+# Define default variables to be used in opcache.ini
 export OPCACHE_ENABLE=${OPCACHE_ENABLE:='1'}
 export OPCACHE_ENABLE_CLI=${OPCACHE_ENABLE_CLI:='0'}
 export OPCACHE_ENABLE_MEMORY_CONSUMPTION=${OPCACHE_ENABLE_MEMORY_CONSUMPTION:='128'}
@@ -37,12 +38,16 @@ export OPCACHE_SAVE_COMMENTS=${OPCACHE_SAVE_COMMENTS:='1'}
 export OPCACHE_LOAD_COMMENTS=${OPCACHE_LOAD_COMMENTS:='1'}
 export OPCACHE_FAST_SHUTDOWN=${OPCACHE_FAST_SHUTDOWN:='1'}
 
+# opcache.ini
+DEBUG "Generating ${PHP_INI_DIR}/conf.d/opcache.ini"
+(export > /tmp/env && set -a && source /tmp/env && templater /etc/entrypoint.d/template/ini/opcache.ini.tpl > ${PHP_INI_DIR}/conf.d/opcache.ini)
+
+
+# Define default variables to be used in apcu.ini
 export APCU_ENABLE=${APCU_ENABLE:='1'}
 export APCU_SHM_SIZE=${APCU_SHM_SIZE:='128M'}
 export APCU_TTL=${APCU_TTL:='7200'}
 
-
-# Use templater to generate config files
-templater /etc/entrypoint.d/php.ini.cnf/core.ini.tpl > /etc/php7/conf.d/core.ini
-templater /etc/entrypoint.d/php.ini.cnf/opcache.ini.tpl > /etc/php7/conf.d/opcache.ini
-templater /etc/entrypoint.d/php.ini.cnf/apcu.ini.tpl > /etc/php7/conf.d/apcu.ini
+# apcu.ini
+DEBUG "Generating ${PHP_INI_DIR}/conf.d/apcu.ini"
+(export > /tmp/env && set -a && source /tmp/env && templater /etc/entrypoint.d/template/ini/apcu.ini.tpl > ${PHP_INI_DIR}/conf.d/apcu.ini)

@@ -86,5 +86,5 @@ max_input_time = {{CORE_MAX_INPUT_TIME}}
 max_execution_time = {{CORE_MAX_EXECUTION_TIME}}
 
 
-
+;
 date.timezone = {{TIMEZONE}}

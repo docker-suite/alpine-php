@@ -1,5 +1,9 @@
 ; http://php.net/manual/en/install.fpm.configuration.php
 
+;;;;;;;;;;;;;;;;;;;;
+; Pool Definitions ;
+;;;;;;;;;;;;;;;;;;;;
+
 ; Start a new pool named 'www'.
 ; the variable $pool can be used in any directive and will be replaced by the
 ; pool name ('www' here)
@@ -95,6 +99,7 @@ pm.max_spare_servers = {{PHP_FPM_PM_MAX_SPARE_SERVERS}}
 ; Default Value: 0
 pm.max_requests = {{PHP_FPM_PM_MAX_REQUEST}}
 
+
 ; Clear environment in FPM workers
 ; Prevents arbitrary environment variables from reaching FPM worker processes
 ; by clearing the environment in workers before env vars specified in this
@@ -104,6 +109,18 @@ pm.max_requests = {{PHP_FPM_PM_MAX_REQUEST}}
 ; Default Value: yes
 clear_env = {{PHP_FPM_PM_CLEAR_ENV}}
 
+; Chroot to this directory at the start. This value must be defined as an
+; absolute path. When this value is not set, chroot is not used.
+; Note: chrooting is a great security feature and should be used whenever
+;       possible. However, all PHP paths will be relative to the chroot
+;       (error_log, sessions.save_path, ...).
+; Default Value: not set
+;chroot =
+
+; Chdir to this directory at the start. This value must be an absolute path.
+; Default Value: current directory or / when chroot
+;chdir = /var/www
+
 ; Redirect worker stdout and stderr into main error log. If not set, stdout and
 ; stderr will be redirected to /dev/null according to FastCGI specs.
 ; Note: on highloaded environement, this can cause some delay in the page
@@ -111,7 +128,10 @@ clear_env = {{PHP_FPM_PM_CLEAR_ENV}}
 ; Default Value: no
 catch_workers_output = {{PHP_FPM_PM_CATCH_WORKERS_OUTPUT}}
 
-chdir = /var/www
+
+; The access log file
+; Default: not set
+access.log = /var/log/php/{{PHP_VERSION}}/access.log
 
 php_admin_flag[log_errors] = on
 ;php_admin_value[memory_limit] = 128M

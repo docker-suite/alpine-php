@@ -1,3 +1,13 @@
+file:
+  /var/log/php7:
+    exists: true
+    filetype: directory
+  /var/log/php7/access.log:
+    exists: true
+    filetype: symlink
+  /var/log/php7/error.log:
+    exists: true
+    filetype: symlink
 
 command:
   php-version:
