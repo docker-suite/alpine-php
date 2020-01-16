@@ -134,7 +134,7 @@ readme: ## Generate docker hub full description
 
 shell: ## Get a command prompt ( usage : make shell v="7.4" )
 	$(eval version := $(or $(v),$(latest)))
-	# @$(MAKE) build-fpm-dev v=$(version)
+	@$(MAKE) build-fpm-dev v=$(version)
 	@docker run -it --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
