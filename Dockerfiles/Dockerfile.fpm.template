@@ -10,6 +10,8 @@ RUN \
     # Add packages
     && apk-install \
         php{{PHP_VERSION}}-fpm \
+    # Remove default www.conf file
+    && rm -f ${PHP_INI_DIR}/php-fpm.d/www.conf \
     # Check php version
     && [ $(php -v | head -n 1 | cut -d " " -f 2 | cut -f1-2 -d".") = "{{PHP_VERSION}}" ] \
 	# Clear apk's cache
