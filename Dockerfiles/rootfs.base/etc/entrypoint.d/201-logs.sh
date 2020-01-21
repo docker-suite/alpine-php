@@ -30,5 +30,5 @@ fi
 # Update permissions
 if [[ -n "$(getent passwd www-data)" ]]; then
     chown -R www-data:www-data "${log_dir}"
-    chmod 0755 "${log_dir}"
+    chmod 0775 "${log_dir}"
 fi

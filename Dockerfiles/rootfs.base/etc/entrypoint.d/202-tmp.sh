@@ -15,4 +15,5 @@ fi
 # Update permissions
 if [[ -n "$(getent passwd www-data)" ]]; then
     chown www-data:www-data "${upload_dir}"
+    chmod 0775 "${upload_dir}"
 fi
