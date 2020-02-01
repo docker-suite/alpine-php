@@ -12,12 +12,12 @@
 ; number of distinct paths that can be cached.
 ;
 ;The size required for the cache entry data is system dependen
-realpath_cache_size = {{CORE_REALPATH_CACHE_SIZE}}
+realpath_cache_size = {{CORE_REALPATH_CACHE_SIZE=4M}}
 
 ; Duration of time (in seconds) for which to cache realpath information
 ; for a given file or directory. For systems with rarely changing files,
 ; consider increasing the value.
-realpath_cache_ttl = {{CORE_REALPATH_CACHE_TTL}}
+realpath_cache_ttl = {{CORE_REALPATH_CACHE_TTL=120}}
 
 
 ; Resource Limits
@@ -27,7 +27,7 @@ realpath_cache_ttl = {{CORE_REALPATH_CACHE_TTL}}
 ; to allocate. This helps prevent poorly written scripts for eating up all
 ; available memory on a server. Note that to have no memory limit, set
 ; this directive to -1.
-memory_limit = {{CORE_MEMORY_LIMIT}}
+memory_limit = {{CORE_MEMORY_LIMIT=128M}}
 
 
 ; File Uploads
@@ -35,7 +35,7 @@ memory_limit = {{CORE_MEMORY_LIMIT}}
 ;
 ; Whether or not to allow HTTP file uploads. See also the upload_max_filesize,
 ; upload_tmp_dir, and post_max_size directives.
-file_uploads = {{CORE_FILE_UPLOADS}}
+file_uploads = {{CORE_FILE_UPLOADS=1}}
 
 ; The temporary directory used for storing files when doing file upload.
 ; Must be writable by whatever user PHP is running as. If not specified
@@ -44,13 +44,13 @@ file_uploads = {{CORE_FILE_UPLOADS}}
 ; If the directory specified here is not writable, PHP falls back to
 ; the system default temporary directory. If open_basedir is on, then
 ; the system default directory must be allowed for an upload to succeed.
-upload_tmp_dir = {{CORE_UPLOAD_TMP_DIR}}
+upload_tmp_dir = {{CORE_UPLOAD_TMP_DIR=/tmp/php/upload}}
 
 ; The maximum size of an uploaded file.
 ;
 ; When an integer is used, the value is measured in bytes. Shorthand
 ; notation, as described in this FAQ, may also be used.
-upload_max_filesize = {{CORE_UPLOAD_MAX_FILESIZE}}
+upload_max_filesize = {{CORE_UPLOAD_MAX_FILESIZE=1G}}
 
 
 ; Data Handling
@@ -59,7 +59,7 @@ upload_max_filesize = {{CORE_UPLOAD_MAX_FILESIZE}}
 ; Sets max size of post data allowed. This setting also affects file
 ; upload. To upload large files, this value must be larger than
 ; upload_max_filesize.
-post_max_size = {{CORE_POST_MAX_SIZE}}
+post_max_size = {{CORE_POST_MAX_SIZE=1G}}
 
 
 ; Runtime Configuration
@@ -71,20 +71,20 @@ post_max_size = {{CORE_POST_MAX_SIZE}}
 ; the buffer to a certain size - you can use a maximum number
 ; of bytes instead of 'On', as a value for this directive
 ; (e.g., output_buffering=4096). This directive is always Off in PHP-CLI.
-output_buffering = {{CORE_OUTPUT_BUFFERING}}
+output_buffering = {{CORE_OUTPUT_BUFFERING=off}}
 
 ; This sets the maximum time in seconds a script is allowed to parse input
 ; data, like POST and GET. Timing begins at the moment PHP is invoked at
 ; the server and ends when execution begins. The default setting is -1,
 ; which means that max_execution_time is used instead. Set to 0 to allow
 ; unlimited time.
-max_input_time = {{CORE_MAX_INPUT_TIME}}
+max_input_time = {{CORE_MAX_INPUT_TIME=-1}}
 
 ; This sets the maximum time in seconds a script is allowed to run before
 ; it is terminated by the parser. This helps prevent poorly written scripts
 ; from tying up the server. The default setting is 30.
-max_execution_time = {{CORE_MAX_EXECUTION_TIME}}
+max_execution_time = {{CORE_MAX_EXECUTION_TIME=30}}
 
 
 ;
-date.timezone = {{TIMEZONE}}
+date.timezone = {{TIMEZONE=UTC}}

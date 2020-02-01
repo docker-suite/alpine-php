@@ -106,7 +106,7 @@ listen.group = www-data
 ;             pm.process_idle_timeout   - The number of seconds after which
 ;                                         an idle process will be killed.
 ; Note: This value is mandatory.
-pm = {{PHP_FPM_PM}}
+pm = {{PHP_FPM_PM=ondemand}}
 
 ; The number of child processes to be created when pm is set to 'static' and the
 ; maximum number of child processes when pm is set to 'dynamic' or 'ondemand'.
@@ -117,33 +117,33 @@ pm = {{PHP_FPM_PM}}
 ; forget to tweak pm.* to fit your needs.
 ; Note: Used when pm is set to 'static', 'dynamic' or 'ondemand'
 ; Note: This value is mandatory.
-pm.max_children = {{PHP_FPM_PM_MAX_CHILDREN}}
+pm.max_children = {{PHP_FPM_PM_MAX_CHILDREN=9}}
 
 ; The number of child processes created on startup.
 ; Note: Used only when pm is set to 'dynamic'
 ; Default Value: min_spare_servers + (max_spare_servers - min_spare_servers) / 2
-pm.start_servers = {{PHP_FPM_PM_START_SERVER}}
+pm.start_servers = {{PHP_FPM_PM_START_SERVER=2}}
 
 ; The desired minimum number of idle server processes.
 ; Note: Used only when pm is set to 'dynamic'
 ; Note: Mandatory when pm is set to 'dynamic'
-pm.min_spare_servers = {{PHP_FPM_PM_MIN_SPARE_SERVERS}}
+pm.min_spare_servers = {{PHP_FPM_PM_MIN_SPARE_SERVERS=1}}
 
 ; The desired maximum number of idle server processes.
 ; Note: Used only when pm is set to 'dynamic'
 ; Note: Mandatory when pm is set to 'dynamic'
-pm.max_spare_servers = {{PHP_FPM_PM_MAX_SPARE_SERVERS}}
+pm.max_spare_servers = {{PHP_FPM_PM_MAX_SPARE_SERVERS=3}}
 
 ; The number of seconds after which an idle process will be killed.
 ; Note: Used only when pm is set to 'ondemand'
 ; Default Value: 10s
-pm.process_idle_timeout = {{PHP_FPM_PM_PROCESS_IDLE_TIMEOUT}}
+pm.process_idle_timeout = {{PHP_FPM_PM_PROCESS_IDLE_TIMEOUT=10s}}
 
 ; The number of requests each child process should execute before respawning.
 ; This can be useful to work around memory leaks in 3rd party libraries. For
 ; endless request processing specify '0'. Equivalent to PHP_FCGI_MAX_REQUESTS.
 ; Default Value: 0
-pm.max_requests = {{PHP_FPM_PM_MAX_REQUEST}}
+pm.max_requests = {{PHP_FPM_PM_MAX_REQUEST=200}}
 
 ; The URI to view the FPM status page. If this value is not set, no URI will be
 ; recognized as a status page. It shows the following informations:
@@ -380,7 +380,7 @@ access.log = /var/log/php/{{PHP_VERSION}}/access.log
 ; Note: on highloaded environement, this can cause some delay in the page
 ; process time (several ms).
 ; Default Value: no
-catch_workers_output = {{PHP_FPM_PM_CATCH_WORKERS_OUTPUT}}
+catch_workers_output = {{PHP_FPM_PM_CATCH_WORKERS_OUTPUT=yes}}
 
 ; Decorate worker output with prefix and suffix containing information about
 ; the child that writes to the log and if stdout or stderr is used as well as
@@ -396,7 +396,7 @@ catch_workers_output = {{PHP_FPM_PM_CATCH_WORKERS_OUTPUT}}
 ; Setting to "no" will make all environment variables available to PHP code
 ; via getenv(), $_ENV and $_SERVER.
 ; Default Value: yes
-clear_env = {{PHP_FPM_PM_CLEAR_ENV}}
+clear_env = {{PHP_FPM_PM_CLEAR_ENV=no}}
 
 ; Limits the extensions of the main script FPM will allow to parse. This can
 ; prevent configuration mistakes on the web server side. You should only limit

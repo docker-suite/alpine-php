@@ -5,7 +5,7 @@ DOCKER_IMAGE=dsuite/alpine-php
 DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 ## Define the latest version
-latest = 7.3
+latest = 7.4
 alpine = 3.10
 
 ##
