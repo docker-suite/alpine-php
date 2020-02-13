@@ -216,12 +216,40 @@ A full list of [dsuite/alpine-base environment variables][alpine-base-readme-var
    <td rowspan="3"></td>
   </tr>
   <tr>
+   <td><code>APCU_SHM_SEGMENTS</code></td>
+   <td><code>1</code></td>
+  </tr>
+  <tr>
    <td><code>APCU_SHM_SIZE</code></td>
    <td><code>128M</code></td>
   </tr>
   <tr>
+   <td><code>APCU_NUM_FILE_HINT</code></td>
+   <td><code>7000</code></td>
+  </tr>
+  <tr>
+   <td><code>APCU_USER_ENTRIES_HINT</code></td>
+   <td><code>4096</code></td>
+  </tr>
+  <tr>
    <td><code>APCU_TTL</code></td>
+   <td><code>3600</code></td>
+  </tr>
+  <tr>
+   <td><code>APCU_USER_TTL</code></td>
    <td><code>7200</code></td>
+  </tr>
+  <tr>
+   <td><code>APCU_GC_TTL</code></td>
+   <td><code>3600</code></td>
+  </tr>
+  <tr>
+   <td><code>APCU_MAX_FILE_SIZE</code></td>
+   <td><code>1M</code></td>
+  </tr>
+  <tr>
+   <td><code>APCU_STAT</code></td>
+   <td><code>1</code></td>
   </tr>
   <tr>
    <td colspan="3"></td>

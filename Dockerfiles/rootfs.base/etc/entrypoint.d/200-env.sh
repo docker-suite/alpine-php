@@ -37,5 +37,12 @@ set -eu
 
 # Variables to be used in apcu.ini
 [ -n "$(env_get "APCU_ENABLE")" ]                       && env_set "APCU_ENABLE" "$(env_get "APCU_ENABLE")" || true
+[ -n "$(env_get "APCU_SHM_SEGMENTS")" ]                 && env_set "APCU_SHM_SEGMENTS" "$(env_get "APCU_SHM_SEGMENTS")" || true
 [ -n "$(env_get "APCU_SHM_SIZE")" ]                     && env_set "APCU_SHM_SIZE" "$(env_get "APCU_SHM_SIZE")" || true
+[ -n "$(env_get "APCU_NUM_FILE_HINT")" ]                && env_set "APCU_NUM_FILE_HINT" "$(env_get "APCU_NUM_FILE_HINT")" || true
+[ -n "$(env_get "APCU_USER_ENTRIES_HINT")" ]            && env_set "APCU_USER_ENTRIES_HINT" "$(env_get "APCU_USER_ENTRIES_HINT")" || true
 [ -n "$(env_get "APCU_TTL")" ]                          && env_set "APCU_TTL" "$(env_get "APCU_TTL")" || true
+[ -n "$(env_get "APCU_USER_TTL")" ]                     && env_set "APCU_USER_TTL" "$(env_get "APCU_USER_TTL")" || true
+[ -n "$(env_get "APCU_GC_TTL")" ]                       && env_set "APCU_GC_TTL" "$(env_get "APCU_GC_TTL")" || true
+[ -n "$(env_get "APCU_MAX_FILE_SIZE")" ]                && env_set "APCU_MAX_FILE_SIZE" "$(env_get "APCU_MAX_FILE_SIZE")" || true
+[ -n "$(env_get "APCU_STAT")" ]                         && env_set "APCU_STAT" "$(env_get "APCU_STAT")" || true
