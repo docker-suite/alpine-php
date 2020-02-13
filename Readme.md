@@ -148,6 +148,18 @@ A full list of [dsuite/alpine-base environment variables][alpine-base-readme-var
    <td><code>30</code></td>
   </tr>
   <tr>
+   <td><code>CORE_HTML_ERRORS</code></td>
+   <td><code>Off</code></td>
+  </tr>
+  <tr>
+   <td><code>CORE_DISPLAY_ERRORS</code></td>
+   <td><code>Off</code></td>
+  </tr>
+  <tr>
+   <td><code>CORE_ERROR_REPORTING</code></td>
+   <td><code>E_ALL</code></td>
+  </tr>
+  <tr>
    <td colspan="3"></td>
   </tr>
   <tr>

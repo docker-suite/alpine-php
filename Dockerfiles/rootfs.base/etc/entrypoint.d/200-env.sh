@@ -18,6 +18,9 @@ set -eu
 [ -n "$(env_get "CORE_MAX_INPUT_TIME")" ]               && env_set "CORE_MAX_INPUT_TIME" "$(env_get "CORE_MAX_INPUT_TIME")" || true
 [ -n "$(env_get "CORE_MAX_EXECUTION_TIME")" ]           && env_set "CORE_MAX_EXECUTION_TIME" "$(env_get "CORE_MAX_EXECUTION_TIME")" || true
 [ -n "$(env_get "TIMEZONE")" ]                          && env_set "TIMEZONE" "$(env_get "TIMEZONE")" || true
+[ -n "$(env_get "CORE_HTML_ERRORS")" ]                  && env_set "CORE_HTML_ERRORS" "$(env_get "CORE_HTML_ERRORS")" || true
+[ -n "$(env_get "CORE_DISPLAY_ERRORS")" ]               && env_set "CORE_DISPLAY_ERRORS" "$(env_get "CORE_DISPLAY_ERRORS")" || true
+[ -n "$(env_get "CORE_ERROR_REPORTING")" ]              && env_set "CORE_ERROR_REPORTING" "$(env_get "CORE_ERROR_REPORTING")" || true
 
 # Variables to be used in opcache.ini
 [ -n "$(env_get "OPCACHE_ENABLE")" ]                    && env_set "OPCACHE_ENABLE" "$(env_get "OPCACHE_ENABLE")" || true

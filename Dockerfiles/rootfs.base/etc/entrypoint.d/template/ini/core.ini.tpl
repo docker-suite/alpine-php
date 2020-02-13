@@ -88,3 +88,8 @@ max_execution_time = {{CORE_MAX_EXECUTION_TIME=30}}
 
 ;
 date.timezone = {{TIMEZONE=UTC}}
+
+; Errors
+html_errors =  {{CORE_HTML_ERRORS=Off}}
+display_errors = {{CORE_DISPLAY_ERRORS=Off}}
+error_reporting = {{CORE_ERROR_REPORTING=E_ALL}}
