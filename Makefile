@@ -1,5 +1,7 @@
-## Name of the image
+## Meta data about the image
 DOCKER_IMAGE=dsuite/alpine-php
+DOCKER_IMAGE_CREATED=$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
+DOCKER_IMAGE_REVISION=$(shell git rev-parse --short HEAD)
 
 ## Current directory
 DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
@@ -19,18 +21,21 @@ help:
 
 build: ## Build all images for a specific version of alpine-php ( usage : make build v="7.4" )
 	@$(eval version := $(or $(v),$(latest)))
-	@$(MAKE) build-base v=$(version)
-	@$(MAKE) build-base-dev v=$(version)
+	@$(MAKE) build-cli v=$(version)
+	@$(MAKE) build-cli-dev v=$(version)
 	@$(MAKE) build-fpm v=$(version)
 	@$(MAKE) build-fpm-dev v=$(version)
 
-build-base: ## Build base images for a specific version of alpine-php ( usage : make build-base v="7.4" )
+build-cli: ## Build cli images for a specific version of alpine-php ( usage : make build-cli v="7.4" )
 	$(eval version := $(or $(v),$(latest)))
 	@docker run --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
+		-e ALPINE_BASE=alpine-base \
 		-e ALPINE_VERSION=$(alpine) \
 		-e PHP_VERSION=$(version) \
+		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
+		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
 		bash -c "templater Dockerfile.base.template > Dockerfile-base-$(version)"
@@ -38,35 +43,70 @@ build-base: ## Build base images for a specific version of alpine-php ( usage : 
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
 		--file $(DIR)/Dockerfiles/Dockerfile-base-$(version) \
-		--tag $(DOCKER_IMAGE):$(version) \
+		--tag $(DOCKER_IMAGE):$(version)-base \
 		$(DIR)/Dockerfiles
-
-build-base-dev: ## Build base-dev images for a specific version of alpine-php ( usage : make build-base-dev v="7.4" )
-	$(eval version := $(or $(v),$(latest)))
-	@$(MAKE) build-base v=$(version)
 	@docker run --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
 		-e ALPINE_VERSION=$(alpine) \
 		-e PHP_VERSION=$(version) \
+		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
+		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
-		bash -c "templater Dockerfile.base.dev.template > Dockerfile-base-dev-$(version)"
+		bash -c "templater Dockerfile.cli.template > Dockerfile-cli-$(version)"
 	@docker build \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
-		--file $(DIR)/Dockerfiles/Dockerfile-base-dev-$(version) \
-		--tag $(DOCKER_IMAGE):$(version)-dev \
+		--file $(DIR)/Dockerfiles/Dockerfile-cli-$(version) \
+		--tag $(DOCKER_IMAGE):$(version)-cli \
+		$(DIR)/Dockerfiles
+
+build-cli-dev: ## Build cli-dev images for a specific version of alpine-php ( usage : make build-cli-dev v="7.4" )
+	$(eval version := $(or $(v),$(latest)))
+	@docker run --rm \
+		-e http_proxy=${http_proxy} \
+		-e https_proxy=${https_proxy} \
+		-e PHP_VERSION=$(version) \
+		-e ALPINE_PHP_VERSION=$(version)-cli \
+		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
+		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
+		-v $(DIR)/Dockerfiles:/data \
+		dsuite/alpine-data \
+		bash -c "templater Dockerfile.dev.template > Dockerfile-cli-dev-$(version)"
+	@docker build \
+		--build-arg http_proxy=${http_proxy} \
+		--build-arg https_proxy=${https_proxy} \
+		--file $(DIR)/Dockerfiles/Dockerfile-cli-dev-$(version) \
+		--tag $(DOCKER_IMAGE):$(version)-cli-dev \
 		$(DIR)/Dockerfiles
 
 build-fpm: ## Build fpm images for a specific version of alpine-php ( usage : make build-fpm v="7.4" )
 	$(eval version := $(or $(v),$(latest)))
-	@$(MAKE) build-base v=$(version)
+	@docker run --rm \
+		-e http_proxy=${http_proxy} \
+		-e https_proxy=${https_proxy} \
+		-e ALPINE_BASE=alpine-runit \
+		-e ALPINE_VERSION=$(alpine) \
+		-e PHP_VERSION=$(version) \
+		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
+		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
+		-v $(DIR)/Dockerfiles:/data \
+		dsuite/alpine-data \
+		bash -c "templater Dockerfile.base.template > Dockerfile-runit-$(version)"
+	@docker build \
+		--build-arg http_proxy=${http_proxy} \
+		--build-arg https_proxy=${https_proxy} \
+		--file $(DIR)/Dockerfiles/Dockerfile-base-$(version) \
+		--tag $(DOCKER_IMAGE):$(version)-runit \
+		$(DIR)/Dockerfiles
 	@docker run --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
 		-e ALPINE_VERSION=$(alpine) \
 		-e PHP_VERSION=$(version) \
+		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
+		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
 		bash -c "templater Dockerfile.fpm.template > Dockerfile-fpm-$(version)"
@@ -77,17 +117,18 @@ build-fpm: ## Build fpm images for a specific version of alpine-php ( usage : ma
 		--tag $(DOCKER_IMAGE):$(version)-fpm \
 		$(DIR)/Dockerfiles
 
-build-fpm-dev: ## Build fpm-dev images for a specific version of alpine-php ( usage : make build-fpm v="7.4" )
+build-fpm-dev: ## Build fpm-dev images for a specific version of alpine-php ( usage : make build-fpm-dev v="7.4" )
 	$(eval version := $(or $(v),$(latest)))
-	@$(MAKE) build-fpm v=$(version)
 	@docker run --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
-		-e ALPINE_VERSION=$(alpine) \
 		-e PHP_VERSION=$(version) \
+		-e ALPINE_PHP_VERSION=$(version)-fpm \
+		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
+		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
-		bash -c "templater Dockerfile.fpm.dev.template > Dockerfile-fpm-dev-$(version)"
+		bash -c "templater Dockerfile.dev.template > Dockerfile-fpm-dev-$(version)"
 	@docker build \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
@@ -109,13 +150,9 @@ test: ## Test a specific version of alpine-php ( usage : make test v="7.4" )
 
 push: ## Push a specific version of alpine-php ( usage : make test v="7.4" )
 	$(eval version := $(or $(v),$(latest)))
-	@$(MAKE) build-base v=$(version)
-	@docker push $(DOCKER_IMAGE):$(version)
-	@$(MAKE) build-base-dev v=$(version)
-	@docker push $(DOCKER_IMAGE):$(version)-dev
-	@$(MAKE) build-fpm v=$(version)
+	@docker push $(DOCKER_IMAGE):$(version)-cli
+	@docker push $(DOCKER_IMAGE):$(version)-cli-dev
 	@docker push $(DOCKER_IMAGE):$(version)-fpm
-	@$(MAKE) build-fpm-dev v=$(version)
 	@docker push $(DOCKER_IMAGE):$(version)-fpm-dev
 
 remove: ## Remove all generated images
@@ -139,6 +176,7 @@ shell: ## Get a command prompt ( usage : make shell v="7.4" )
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
 		-e DEBUG_LEVEL=DEBUG \
+		-e TIMEZONE=UTC \
  		-v $(DIR):/data \
 		$(DOCKER_IMAGE):$(version)-fpm-dev \
 		bash
