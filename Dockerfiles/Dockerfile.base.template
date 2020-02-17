@@ -1,8 +1,8 @@
-FROM dsuite/{{ALPINE_BASE}}:{{ALPINE_VERSION}}
+FROM dsuite/{{DSUITE_IMAGE}}:{{DSUITE_VERSION}}
 
 
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
-    org.opencontainers.image.title="docker-suite dsuite/alpine-php:{{PHP_VERSION}} image" \
+    org.opencontainers.image.title="docker-suite dsuite/alpine-php:{{PHP_VERSION}}-intermediate image" \
     org.opencontainers.image.description="Minimal Alpine image with php {{PHP_VERSION}} and runit process supervisor" \
     org.opencontainers.image.authors="Hexosse <hexosse@gmail.com>" \
     org.opencontainers.image.vendor="docker-suite" \

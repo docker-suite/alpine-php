@@ -1,7 +1,7 @@
-FROM dsuite/alpine-php:{{ALPINE_PHP_VERSION}}
+FROM dsuite/alpine-php:{{DSUITE_VERSION}}
 
 
-LABEL org.opencontainers.image.title="docker-suite dsuite/alpine-php:{{ALPINE_PHP_VERSION}}-dev image" \
+LABEL org.opencontainers.image.title="docker-suite dsuite/alpine-php:{{DSUITE_VERSION}}-dev image" \
     org.opencontainers.image.created="{{DOCKER_IMAGE_CREATED}}" \
     org.opencontainers.image.revision="{{DOCKER_IMAGE_REVISION}}"
 
