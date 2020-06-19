@@ -8,8 +8,8 @@ DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 ## Define the latest version
 latest = 7.4
-alpine = 3.10
-nginx = 1.17
+alpine = 3.11
+nginx = 1.18
 
 ##
 .DEFAULT_GOAL := help
