@@ -11,4 +11,8 @@ www_dir="/var/www"
 if [ ! -d "$www_dir" ]; then
     DEBUG "Creating www folder: $www_dir"
     mkdir -p $www_dir
+    if [[ -n "$(getent passwd www-data)" ]]; then
+        chown www-data:www-data "${www_dir}"
+        chmod 777 "${www_dir}"
+    fi
 fi
