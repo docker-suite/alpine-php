@@ -60,6 +60,7 @@ build-cli: ## Build cli images for a specific version of alpine-php ( usage : ma
 	@docker run --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
+		-e DSUITE_VERSION=$(php_version)-base \
 		-e PHP_VERSION=$(php_version) \
 		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
 		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
@@ -116,7 +117,7 @@ build-fpm: ## Build fpm images for a specific version of alpine-php ( usage : ma
 	@docker run --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
-		-e DSUITE_VERSION=$(php_version) \
+		-e DSUITE_VERSION=$(php_version)-runit \
 		-e ALPINE_VERSION=$(alpine_version) \
 		-e PHP_VERSION=$(php_version) \
 		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
@@ -165,12 +166,27 @@ build-nginx-fpm: ## Build fpm images for a specific version of alpine-php ( usag
 		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
-		bash -c "templater Dockerfile.base.template > Dockerfile-nginx-runit-$(php_version)"
+		bash -c "templater Dockerfile.base.template > Dockerfile-nginx-base-$(php_version)"
 	@docker build --force-rm \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
-		--file $(DIR)/Dockerfiles/Dockerfile-nginx-runit-$(php_version) \
-		--tag $(DOCKER_IMAGE):$(php_version)-nginx-runit \
+		--file $(DIR)/Dockerfiles/Dockerfile-nginx-base-$(php_version) \
+		--tag $(DOCKER_IMAGE):$(php_version)-nginx-base \
+		$(DIR)/Dockerfiles
+	@docker run --rm \
+		-e http_proxy=${http_proxy} \
+		-e https_proxy=${https_proxy} \
+		-e DSUITE_VERSION=$(php_version)-nginx-base \
+		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
+		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
+		-v $(DIR)/Dockerfiles:/data \
+		dsuite/alpine-data \
+		bash -c "templater Dockerfile.nginx.template > Dockerfile-nginx-$(php_version)"
+	@docker build --force-rm \
+		--build-arg http_proxy=${http_proxy} \
+		--build-arg https_proxy=${https_proxy} \
+		--file $(DIR)/Dockerfiles/Dockerfile-nginx-$(php_version) \
+		--tag $(DOCKER_IMAGE):$(php_version)-nginx \
 		$(DIR)/Dockerfiles
 	@docker run --rm \
 		-e http_proxy=${http_proxy} \
