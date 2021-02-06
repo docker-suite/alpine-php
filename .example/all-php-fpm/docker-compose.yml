@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+
+    nginx7.1:
+        image: dsuite/alpine-nginx:1.19
+        container_name: nginx7.1
+        environment:
+            - PHP_FPM_ENABLE=true
+            - PHP_FPM_HOST=php7.1
+        ports:
+            - 8081:80
+        volumes:
+            - ./www:/var/www:ro
+            - ./log:/var/log
+        depends_on:
+            - php7.1
+
+    php7.1:
+        image: dsuite/alpine-php:7.1-fpm-dev
+        container_name: php7.1
+        volumes:
+            - ./config/php-fpm:/etc/php-custom.d
+            - ./www:/var/www:ro
+            - ./log:/var/log
+
+    nginx7.2:
+        image: dsuite/alpine-nginx:1.19
+        container_name: nginx7.2
+        environment:
+            - PHP_FPM_ENABLE=true
+            - PHP_FPM_HOST=php7.2
+        ports:
+            - 8082:80
+        volumes:
+            - ./www:/var/www:ro
+            - ./log:/var/log
+        depends_on:
+            - php7.2
+
+    php7.2:
+        image: dsuite/alpine-php:7.2-fpm-dev
+        container_name: php7.2
+        volumes:
+            - ./config/php-fpm:/etc/php-custom.d
+            - ./www:/var/www:ro
+            - ./log:/var/log
+
+    nginx7.3:
+        image: dsuite/alpine-nginx:1.19
+        container_name: nginx7.3
+        environment:
+            - PHP_FPM_ENABLE=true
+            - PHP_FPM_HOST=php7.3
+        ports:
+            - 8083:80
+        volumes:
+            - ./www:/var/www:ro
+            - ./log:/var/log
+        depends_on:
+            - php7.3
+
+    php7.3:
+        image: dsuite/alpine-php:7.3-fpm-dev
+        container_name: php7.3
+        volumes:
+            - ./config/php-fpm:/etc/php-custom.d
+            - ./www:/var/www:ro
+            - ./log:/var/log
+
+    nginx7.4:
+        image: dsuite/alpine-nginx:1.19
+        container_name: nginx7.7
+        environment:
+            - PHP_FPM_ENABLE=true
+            - PHP_FPM_HOST=php7.4
+        ports:
+            - 8084:80
+        volumes:
+            - ./www:/var/www:ro
+            - ./log:/var/log
+        depends_on:
+            - php7.4
+
+    php7.4:
+        image: dsuite/alpine-php:7.4-fpm-dev
+        container_name: php7.4
+        volumes:
+            - ./config/php-fpm:/etc/php-custom.d
+            - ./www:/var/www:ro
+            - ./log:/var/log

@@ -1,17 +1,17 @@
 FROM dsuite/{{DSUITE_IMAGE}}:{{DSUITE_VERSION}}
 
 
-LABEL maintainer="Hexosse <hexosse@gmail.com>" \
-    org.opencontainers.image.title="docker-suite dsuite/alpine-php:{{PHP_VERSION}}-intermediate image" \
-    org.opencontainers.image.description="Minimal Alpine image with php {{PHP_VERSION}} and runit process supervisor" \
-    org.opencontainers.image.authors="Hexosse <hexosse@gmail.com>" \
-    org.opencontainers.image.vendor="docker-suite" \
-    org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.url="https://github.com/docker-suite/alpine-php" \
-    org.opencontainers.image.source="https://github.com/docker-suite/alpine-php" \
-    org.opencontainers.image.documentation="https://github.com/docker-suite/alpine-php/blob/master/Readme.md" \
-    org.opencontainers.image.created="{{DOCKER_IMAGE_CREATED}}" \
-    org.opencontainers.image.revision="{{DOCKER_IMAGE_REVISION}}"
+# LABEL maintainer="Hexosse <hexosse@gmail.com>" \
+#     org.opencontainers.image.title="docker-suite dsuite/alpine-php:{{PHP_VERSION}}-intermediate image" \
+#     org.opencontainers.image.description="Minimal Alpine image with php {{PHP_VERSION}} and runit process supervisor" \
+#     org.opencontainers.image.authors="Hexosse <hexosse@gmail.com>" \
+#     org.opencontainers.image.vendor="docker-suite" \
+#     org.opencontainers.image.licenses="MIT" \
+#     org.opencontainers.image.url="https://github.com/docker-suite/alpine-php" \
+#     org.opencontainers.image.source="https://github.com/docker-suite/alpine-php" \
+#     org.opencontainers.image.documentation="https://github.com/docker-suite/alpine-php/blob/master/Readme.md" \
+#     org.opencontainers.image.created="{{DOCKER_IMAGE_CREATED}}" \
+#     org.opencontainers.image.revision="{{DOCKER_IMAGE_REVISION}}"
 
 
 ## Current php version
@@ -61,7 +61,7 @@ RUN \
     # Update repository indexes
     && apk-update \
     # Add packages
-    && apk-install \
+    && apk-install --repository http://repo.hexocube.fr/alpine/v{{ALPINE_VERSION}} \
         php{{PHP_VERSION}} \
         # php libs
         php{{PHP_VERSION}}-bcmath \
