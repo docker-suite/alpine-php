@@ -9,7 +9,7 @@
 set -eu
 
 # Generate default config file only if folder is empty
-if [ "$(ls -A ${PHP_INI_DIR}/php-fpm.d/ | wc -m)" == "0" ]; then
+if [[ "$(ls -A ${PHP_INI_DIR}/php-fpm.d/ | wc -m)" == "0" ]]; then
 
     # www.conf
     DEBUG "Generating ${PHP_INI_DIR}/php-fpm.d/www.conf"

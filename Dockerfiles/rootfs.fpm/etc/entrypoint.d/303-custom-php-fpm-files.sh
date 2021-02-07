@@ -9,7 +9,7 @@ custom_src="/etc/php-fpm-custom.d"
 conf_dir="$PHP_INI_DIR/php-fpm.d"
 
 # Create source folder if necessary
-if [ ! -d "${custom_src}" ]; then
+if [[ ! -d "${custom_src}" ]]; then
     DEBUG "Creating custom conf files folder: $custom_src"
     mkdir -p $custom_src
 fi

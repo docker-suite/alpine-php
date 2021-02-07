@@ -8,7 +8,7 @@ set -eu
 conf_dir="$PHP_INI_DIR/conf.d"
 
 # Create folder if necessary
-if [ ! -d "$conf_dir" ]; then
+if [[ ! -d "$conf_dir" ]]; then
     DEBUG "Creating conf.d folder: $conf_dir"
     mkdir -p $conf_dir
 fi

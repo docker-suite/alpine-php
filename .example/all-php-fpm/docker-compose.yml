@@ -70,7 +70,7 @@ services:
 
     nginx7.4:
         image: dsuite/alpine-nginx:1.19
-        container_name: nginx7.7
+        container_name: nginx7.4
         environment:
             - PHP_FPM_ENABLE=true
             - PHP_FPM_HOST=php7.4

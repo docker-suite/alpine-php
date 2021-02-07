@@ -5,20 +5,19 @@
 set -eu
 
 # folder
-www_dir="/var/www"
+upload_dir="/tmp/php/upload"
 
 # Create folder if necessary
-if [[ ! -d "$www_dir" ]]; then
-    DEBUG "Creating www folder: $www_dir"
-    mkdir -p $www_dir
+if [[ ! -d "${upload_dir}" ]]; then
+    mkdir -p ${upload_dir}
 fi
 
 # Update owner
 if [[ -n "$USER" ]]; then
-    chown -R "$USER" "${www_dir}" || true
+    chown -R "$USER" "${upload_dir}" || true
 elif [[ -n "$(getent passwd www-data)" ]]; then
-    chown -R www-data:www-data "${www_dir}" || true
+    chown -R www-data:www-data "${upload_dir}" || true
 fi
 
 # Update permissions
-chmod -R 776 "${www_dir}" || true
+chmod -R 776 "${upload_dir}" || true

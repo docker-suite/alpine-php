@@ -11,24 +11,28 @@ log_error="error.log"
 
 # Create log folder if necessary
 if [[ ! -d "${log_dir}" ]]; then
-    DEBUG "Creating log folder: $log_dir"
+    DEBUG "Creating php${PHP_VERSION} log folder: $log_dir"
     mkdir -p $log_dir
 fi
 
 # Create access log file
 if [[ ! -f "${log_dir}/${log_access}" ]]; then
-    DEBUG "Creating access log file: ${log_dir}/${log_access}"
+    DEBUG "Creating php${PHP_VERSION} access log file: ${log_dir}/${log_access}"
     touch ${log_dir}/${log_access}
 fi
 
 # Create error log file
 if [[ ! -f "${log_dir}/${log_error}" ]]; then
-    DEBUG "Creating error log file: ${log_dir}/${log_error}"
+    DEBUG "Creating php${PHP_VERSION} error log file: ${log_dir}/${log_error}"
     touch ${log_dir}/${log_error}
 fi
 
-# Update permissions
-if [[ -n "$(getent passwd www-data)" ]]; then
-    chown -R www-data:www-data "${log_dir}"
-    chmod 0775 "${log_dir}"
+# Update owner
+if [[ -n "$USER" ]]; then
+    chown -R "$USER" "${log_dir}" || true
+elif [[ -n "$(getent passwd www-data)" ]]; then
+    chown -R www-data:www-data "${log_dir}" || true
 fi
+
+# Update permissions
+chmod -R 776 "${log_dir}" || true

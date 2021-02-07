@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![dockeri.co](https://dockeri.co/image/dsuite/alpine-php)](https://hub.docker.com/r/dsuite/alpine-php)
 
-A php docker image built on top of [docker-suite (dsuite)][docker-suite] [dsuite/alpine-runit][alpine-runit] container with [runit][runit] process supervisor.
+A php docker image built on top of [docker-suite (dsuite)][docker-suite] [dsuite/alpine-base][alpine-base].
 
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Available Images
@@ -373,9 +373,9 @@ docker run -v ./my_pool.conf:/etc/php-fpm-custom.d/my_pool.conf:ro -d dsuite/alp
 ```
 
 
-[runit]: http://smarden.org/runit/
+[base]: http://smarden.org/base/
 [docker-suite]: https://github.com/docker-suite/
 [alpine-base]: https://github.com/docker-suite/alpine-base/
-[alpine-runit]: https://github.com/docker-suite/alpine-runit/
+[alpine-base]: https://github.com/docker-suite/alpine-base/
 [alpine-base-readme]: https://github.com/docker-suite/alpine-base/blob/master/Readme.md/
 [alpine-base-readme-variables]: https://github.com/docker-suite/alpine-base/blob/master/Readme.md#-environment-variables

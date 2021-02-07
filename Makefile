@@ -126,7 +126,6 @@ build-fpm-dev: ## Build fpm-dev images for a specific version of alpine-php ( us
 
 test: ## Test a specific version of alpine-php ( usage : make test php=7.4 )
 	@$(eval php_version := $(or $(php),$(php_latest)))
-	@$(MAKE) build-fpm-dev php=$(php_version)
 	@docker run --rm -t \
 		-v $(DIR)/tests:/goss \
 		-v /tmp:/tmp \
@@ -155,7 +154,6 @@ readme: ## Generate docker hub full description
 
 shell: ## Get a command prompt ( usage : make shell php=7.4 )
 	@$(eval php_version := $(or $(php),$(php_latest)))
-	@$(MAKE) build-fpm-dev php=$(php_version)
 	@docker run -it --rm \
 		-e DEBUG_LEVEL=DEBUG \
 		-e TIMEZONE=UTC \
