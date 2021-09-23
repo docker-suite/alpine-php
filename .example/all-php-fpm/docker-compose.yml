@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
     nginx7.1:
-        image: dsuite/alpine-nginx:1.19
+        image: dsuite/alpine-nginx:1.21
         container_name: nginx7.1
         environment:
             - PHP_FPM_ENABLE=true
@@ -17,15 +17,15 @@ services:
             - php7.1
 
     php7.1:
-        image: dsuite/alpine-php:7.1-fpm-dev
+        image: dsuite/alpine-php:7.1-fpm
         container_name: php7.1
         volumes:
             - ./config/php-fpm:/etc/php-custom.d
-            - ./www:/var/www:ro
+            - ./www:/var/www
             - ./log:/var/log
 
     nginx7.2:
-        image: dsuite/alpine-nginx:1.19
+        image: dsuite/alpine-nginx:1.21
         container_name: nginx7.2
         environment:
             - PHP_FPM_ENABLE=true
@@ -39,15 +39,15 @@ services:
             - php7.2
 
     php7.2:
-        image: dsuite/alpine-php:7.2-fpm-dev
+        image: dsuite/alpine-php:7.2-fpm
         container_name: php7.2
         volumes:
             - ./config/php-fpm:/etc/php-custom.d
-            - ./www:/var/www:ro
+            - ./www:/var/www
             - ./log:/var/log
 
     nginx7.3:
-        image: dsuite/alpine-nginx:1.19
+        image: dsuite/alpine-nginx:1.21
         container_name: nginx7.3
         environment:
             - PHP_FPM_ENABLE=true
@@ -61,15 +61,15 @@ services:
             - php7.3
 
     php7.3:
-        image: dsuite/alpine-php:7.3-fpm-dev
+        image: dsuite/alpine-php:7.3-fpm
         container_name: php7.3
         volumes:
             - ./config/php-fpm:/etc/php-custom.d
-            - ./www:/var/www:ro
+            - ./www:/var/www
             - ./log:/var/log
 
     nginx7.4:
-        image: dsuite/alpine-nginx:1.19
+        image: dsuite/alpine-nginx:1.21
         container_name: nginx7.4
         environment:
             - PHP_FPM_ENABLE=true
@@ -83,9 +83,9 @@ services:
             - php7.4
 
     php7.4:
-        image: dsuite/alpine-php:7.4-fpm-dev
+        image: dsuite/alpine-php:7.4-fpm
         container_name: php7.4
         volumes:
             - ./config/php-fpm:/etc/php-custom.d
-            - ./www:/var/www:ro
+            - ./www:/var/www
             - ./log:/var/log

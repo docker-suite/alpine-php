@@ -28,8 +28,8 @@ if [[ ! -f "${log_dir}/${log_error}" ]]; then
 fi
 
 # Update owner
-if [[ -n "$USER" ]]; then
-    chown -R "$USER" "${log_dir}" || true
+if [[ -n "${USER}" ]]; then
+    chown -R "${USER}" "${log_dir}" || true
 elif [[ -n "$(getent passwd www-data)" ]]; then
     chown -R www-data:www-data "${log_dir}" || true
 fi

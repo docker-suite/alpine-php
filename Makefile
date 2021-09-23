@@ -8,7 +8,7 @@ DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 ## Define latest versions
 php_latest = 7.4
-alpine_latest = 3.13
+alpine_latest = 3.14
 
 ##
 .DEFAULT_GOAL := help
@@ -19,11 +19,11 @@ help:
 	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
 	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
 
-all: ## Build all supported versions
-	@$(MAKE) build php=7.1  alpine=3.11
-	@$(MAKE) build php=7.2  alpine=3.13
-	@$(MAKE) build php=7.3  alpine=3.13
-	@$(MAKE) build php=7.4  alpine=3.13
+build-all: ## Build all supported versions
+	@$(MAKE) build php=7.1 alpine=3.11
+	@$(MAKE) build php=7.2 alpine=3.12
+	@$(MAKE) build php=7.3 alpine=3.12
+	@$(MAKE) build php=7.4 alpine=3.14
 
 build: ## Build all images for a specific version of alpine-php ( usage : make build php=7.4 )
 	@$(eval php_version := $(or $(php),$(php_latest)))
@@ -126,12 +126,9 @@ build-fpm-dev: ## Build fpm-dev images for a specific version of alpine-php ( us
 
 test: ## Test a specific version of alpine-php ( usage : make test php=7.4 )
 	@$(eval php_version := $(or $(php),$(php_latest)))
-	@docker run --rm -t \
-		-v $(DIR)/tests:/goss \
-		-v /tmp:/tmp \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		dsuite/goss:latest \
-		dgoss run --entrypoint=/goss/entrypoint.sh $(DOCKER_IMAGE):$(php_version)-fpm-dev
+	@GOSS_FILES_PATH=$(DIR)/tests \
+	GOSS_SLEEP=0.5 \
+	 	dgoss run -e $(DOCKER_IMAGE):$(php_version)-fpm-dev
 
 push: ## Push a specific version of alpine-php ( usage : make push php=7.4 )
 	@$(eval php_version := $(or $(php),$(php_latest)))

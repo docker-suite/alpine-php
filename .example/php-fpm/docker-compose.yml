@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
     nginx:
-        image: dsuite/alpine-nginx:1.19
+        image: dsuite/alpine-nginx:latest
         container_name: nginx
         environment:
             - PHP_FPM_ENABLE=true
@@ -21,5 +21,5 @@ services:
         container_name: php
         volumes:
             - ./config/php-fpm:/etc/php-custom.d
-            - ./www:/var/www:ro
+            - ./www:/var/www
             - ./log:/var/log

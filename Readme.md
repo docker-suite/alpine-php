@@ -357,19 +357,19 @@ A full list of [dsuite/alpine-base environment variables][alpine-base-readme-var
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Use custom php ini file
 
 ```bash
-docker run -v ./my_conf.ini:/etc/php-custom.d/my_conf.ini:ro -d dsuite/alpine-php:7.3
+docker run -v ./my_conf.ini:/etc/php-custom.d/my_conf.ini:ro -d dsuite/alpine-php:7.4
 ```
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Use your own php-fpm.conf file
 
 ```bash
-docker run -v ./php-fpm.conf:/etc/php/7.X/php-fpm.conf:ro -d dsuite/alpine-php:7.3
+docker run -v ./php-fpm.conf:/etc/php/7.X/php-fpm.conf:ro -d dsuite/alpine-php:7.4
 ```
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Use custom php-fpm config file
 
 ```bash
-docker run -v ./my_pool.conf:/etc/php-fpm-custom.d/my_pool.conf:ro -d dsuite/alpine-php:7.3
+docker run -v ./my_pool.conf:/etc/php-fpm-custom.d/my_pool.conf:ro -d dsuite/alpine-php:7.4
 ```
 
 
