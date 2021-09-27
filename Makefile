@@ -46,7 +46,7 @@ build-cli: ## Build cli images for a specific version of alpine-php ( usage : ma
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
 		bash -c "templater Dockerfile.base.template > Dockerfile-base-$(php_version)"
-	@docker build --force-rm \
+	@docker build --no-cache --force-rm \
 		--file $(DIR)/Dockerfiles/Dockerfile-base-$(php_version) \
 		--tag $(DOCKER_IMAGE):$(php_version)-base \
 		$(DIR)/Dockerfiles
@@ -58,7 +58,7 @@ build-cli: ## Build cli images for a specific version of alpine-php ( usage : ma
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
 		bash -c "templater Dockerfile.cli.template > Dockerfile-cli-$(php_version)"
-	@docker build --force-rm \
+	@docker build --no-cache --force-rm \
 		--file $(DIR)/Dockerfiles/Dockerfile-cli-$(php_version) \
 		--tag $(DOCKER_IMAGE):$(php_version)-cli \
 		$(DIR)/Dockerfiles
@@ -73,7 +73,7 @@ build-cli-dev: ## Build cli-dev images for a specific version of alpine-php ( us
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
 		bash -c "templater Dockerfile.dev.template > Dockerfile-cli-dev-$(php_version)"
-	@docker build --force-rm \
+	@docker build --no-cache --force-rm \
 		--file $(DIR)/Dockerfiles/Dockerfile-cli-dev-$(php_version) \
 		--tag $(DOCKER_IMAGE):$(php_version)-cli-dev \
 		$(DIR)/Dockerfiles
@@ -91,7 +91,7 @@ build-fpm: ## Build fpm images for a specific version of alpine-php ( usage : ma
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
 		bash -c "templater Dockerfile.base.template > Dockerfile-fpm-base-$(php_version)"
-	@docker build --force-rm \
+	@docker build --no-cache --force-rm \
 		--file $(DIR)/Dockerfiles/Dockerfile-fpm-base-$(php_version) \
 		--tag $(DOCKER_IMAGE):$(php_version)-fpm-base \
 		$(DIR)/Dockerfiles
@@ -104,7 +104,7 @@ build-fpm: ## Build fpm images for a specific version of alpine-php ( usage : ma
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
 		bash -c "templater Dockerfile.fpm.template > Dockerfile-fpm-$(php_version)"
-	@docker build --force-rm \
+	@docker build --no-cache --force-rm \
 		--file $(DIR)/Dockerfiles/Dockerfile-fpm-$(php_version) \
 		--tag $(DOCKER_IMAGE):$(php_version)-fpm \
 		$(DIR)/Dockerfiles
@@ -119,7 +119,7 @@ build-fpm-dev: ## Build fpm-dev images for a specific version of alpine-php ( us
 		-v $(DIR)/Dockerfiles:/data \
 		dsuite/alpine-data \
 		bash -c "templater Dockerfile.dev.template > Dockerfile-fpm-dev-$(php_version)"
-	@docker build --force-rm \
+	@docker build --no-cache --force-rm \
 		--file $(DIR)/Dockerfiles/Dockerfile-fpm-dev-$(php_version) \
 		--tag $(DOCKER_IMAGE):$(php_version)-fpm-dev \
 		$(DIR)/Dockerfiles
@@ -129,6 +129,12 @@ test: ## Test a specific version of alpine-php ( usage : make test php=7.4 )
 	@GOSS_FILES_PATH=$(DIR)/tests \
 	GOSS_SLEEP=0.5 \
 	 	dgoss run -e $(DOCKER_IMAGE):$(php_version)-fpm-dev
+
+push-all: ## Push all  versions of alpine-php
+	@$(MAKE) push php=7.1
+	@$(MAKE) push php=7.2
+	@$(MAKE) push php=7.3
+	@$(MAKE) push php=7.4
 
 push: ## Push a specific version of alpine-php ( usage : make push php=7.4 )
 	@$(eval php_version := $(or $(php),$(php_latest)))
